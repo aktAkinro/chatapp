@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'chatapi',
     'user_control',
+    'message_control',
 ]
 
 MIDDLEWARE = [

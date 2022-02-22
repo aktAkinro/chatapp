@@ -1,17 +1,19 @@
 import jwt
 from rest_framework import serializers
+from rest_framework import permissions
 from .models import Jwt
-from .models import CustomUser
+from .models import CustomUser, UserProfile
 from datetime import datetime, timedelta
 from django.conf import settings
 import random
 import string
 from rest_framework.views import APIView
-from .serializers import LoginSerializer, RefreshSerializer, RegisterSerializer
+from .serializers import LoginSerializer, RefreshSerializer, RegisterSerializer, UserProfileSerializer
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from .authentication import Authentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
 
 # Create your views here.
 
@@ -95,6 +97,9 @@ class RefreshView(APIView):
 
         return Response({'access': access, 'refresh': refresh})
 
-
+class UserProfileView(APIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    permission_class = (IsAuthenticated, ) #so you can only access profile when logged in
 
 
